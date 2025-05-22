@@ -21,6 +21,8 @@ public class FarmableObject : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log(thisFarmableObjectType + " Collected x" + amountToGive);
+        
+        if (GameObject.FindFirstObjectByType<CollectionHandler>() == null) return;
         GameObject.FindFirstObjectByType<CollectionHandler>().UpdateCollectionMsg(thisFarmableObjectType, amountToGive);
     }
 }

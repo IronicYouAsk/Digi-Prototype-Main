@@ -241,6 +241,37 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
+--- !u!1 &279569633373355238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7670692200403434775}
+  m_Layer: 0
+  m_Name: Ray Start Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7670692200403434775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279569633373355238}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: 0, y: 10.11782, z: 0}
+  m_LocalScale: {x: 11.405395, y: 11.405395, z: 11.405395}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8222759904753039619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &284181531049519063
 GameObject:
   m_ObjectHideFlags: 0
@@ -7660,8 +7691,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603619931823299404}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.258819, z: 0, w: 0.9659259}
+  m_LocalPosition: {x: 0, y: -0.744, z: 0}
   m_LocalScale: {x: 0.08767781, y: 0.08767781, z: 0.08767781}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7673,7 +7704,7 @@ Transform:
   - {fileID: 4481082282584181016}
   - {fileID: 8222759904753039619}
   m_Father: {fileID: 687789221118592869}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
 --- !u!114 &6837176586084706634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8678,7 +8709,7 @@ Transform:
   m_GameObject: {fileID: 7059070292507095817}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.07, z: 3.66}
+  m_LocalPosition: {x: 0, y: 0.32599962, z: 3.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10899,6 +10930,7 @@ GameObject:
   - component: {fileID: 1274556638169721619}
   - component: {fileID: 2685261447822715437}
   - component: {fileID: 6211225082692742635}
+  - component: {fileID: 7346513131096084914}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10916,7 +10948,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.16, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8022901452413431977}
@@ -10940,7 +10972,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.8, y: 2.2, z: 1.8}
   m_Center: {x: 0, y: 0.7, z: 0}
@@ -10988,6 +11020,30 @@ MonoBehaviour:
   rayRange: 10
   jumpRayRange: 1
   orientationAdjustSpeed: 5
+  tiltWeight: 0.4
+  tiltDetectDist: 1
+  rayStartPoint: {fileID: 7670692200403434775}
+--- !u!135 &7346513131096084914
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565104944380189205}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.21
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8572426005519158073
 GameObject:
   m_ObjectHideFlags: 0
@@ -12021,6 +12077,7 @@ Transform:
   - {fileID: 6707986794007871213}
   - {fileID: 8098749786223295473}
   - {fileID: 4756141832806880365}
+  - {fileID: 7670692200403434775}
   m_Father: {fileID: 8022901452413431977}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &624784588920916786

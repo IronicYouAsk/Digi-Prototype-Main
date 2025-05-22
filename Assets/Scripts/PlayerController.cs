@@ -1,11 +1,5 @@
 using Lolopupka;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,19 +8,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float rayRange = 10f;
     [SerializeField] float jumpRayRange = 1f;
     [SerializeField] float orientationAdjustSpeed = 5f;
+    [SerializeField] float tiltAmount = 30f;
+    [SerializeField] float tiltDetectDist = 1f;
 
     GameObject player;
     GameObject playerCamera;
     Rigidbody rb;
     LayerMask layerMask;
+    proceduralAnimation procAnimScript;
 
     private bool canJump = true;
     private bool isGrounded = true;
 
     private Vector3 movement;
+    private Quaternion lookRotation;
+    private Vector3 rayStartPoint;
+
+    private GameObject procAnimObject;
 
     private void Start() 
     {
+        procAnimObject = FindFirstObjectByType<proceduralAnimation>().gameObject;
+        procAnimScript = procAnimObject.GetComponent<proceduralAnimation>(); 
+        
         Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         player = gameObject;
@@ -36,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        SphereCollider sphereCollider = player.gameObject.GetComponent<SphereCollider>();
+        rayStartPoint = sphereCollider.transform.TransformPoint(sphereCollider.center);
         HandleMovement();
         RayCast();
     }
@@ -74,7 +80,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector3(movement.x * moveSpeed, rb.linearVelocity.y, movement.z * moveSpeed);
         }
 
-        HandleJump();
+        // HandleJump();
     }
 
     void HandleJump()
@@ -84,6 +90,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, playerDown, out hit, jumpRayRange, layerMask))
         {
+            ProcAnimEnabled(true);
             isGrounded = true;
             canJump = true;
             // Debug.Log("Grounded");
@@ -97,8 +104,22 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded && canJump && Input.GetAxis("Jump") > 0)
         {
+            // Jump
+            ProcAnimEnabled(false);
             rb.AddForce(transform.up * jumpThrust, ForceMode.Impulse);
             canJump = false;
+        }
+    }
+
+    private void ProcAnimEnabled(bool isEnabled)
+    {
+        if (procAnimScript != null)
+        {
+            procAnimScript.enabled = isEnabled;
+        }
+        else
+        {
+            Debug.LogWarning("procAnim Script is null");
         }
     }
 
@@ -111,19 +132,49 @@ public class PlayerController : MonoBehaviour
         // If the camera forward is not zero, update the player rotation
         if (cameraForward != Vector3.zero)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(cameraForward, transform.up);
-            player.transform.rotation = lookRotation;
+            lookRotation = Quaternion.LookRotation(cameraForward, transform.up);
         }
     }
 
     void HandleOrientation(RaycastHit hit)
     {
-        Quaternion normalRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, normalRotation, Time.fixedDeltaTime * orientationAdjustSpeed);
+        // Quaternion normalRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        // transform.rotation = Quaternion.Slerp(transform.rotation, normalRotation, Time.fixedDeltaTime * orientationAdjustSpeed);
+
+        Quaternion tiltAngle;
+        if (Physics.Raycast(rayStartPoint, player.transform.forward, tiltDetectDist, layerMask))
+        {
+            tiltAngle = Quaternion.Euler(tiltAmount, 0f, 0f);
+        }
+        else
+        {
+            tiltAngle = Quaternion.Euler(0f, 0f, 0f);
+        }
+
+        Debug.DrawLine(rayStartPoint, rayStartPoint + player.transform.forward * tiltDetectDist, Color.red);
+
+        
+
+        Quaternion groundRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+
+        Quaternion targetRotation = groundRotation * lookRotation * tiltAngle;
+    
+        transform.rotation = targetRotation;
+        // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * orientationAdjustSpeed);
     }
 
     //Idea: Gravity is in direction of -normal surface being climbed.
 
     //Add player orientation for jumping against walls
     //wall climbing
+
+    // Quaternion groundRotation = Quaternion.FromToRotation(Vector3.up, groundNormal); // Align with ground
+    // Quaternion tiltRotation = Quaternion.Euler(tiltAngle, 0f, 0f) * groundRotation; // Apply backward tilt *relative* to ground
+
+    // // Blend both target rotations
+    // Quaternion targetRotation = Quaternion.Slerp(groundRotation, tiltRotation, tiltWeight); // tiltWeight from 0 to 1
+
+    // // Smoothly rotate current player rotation toward the target
+    // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
 }

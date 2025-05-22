@@ -775,7 +775,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1434,26 +1435,6 @@ PrefabInstance:
     - target: {fileID: 687789221118592869, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022901452413431977, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9659259
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022901452413431977, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022901452413431977, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.258819
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022901452413431977, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022901452413431977, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 8565104944380189205, guid: f5428ee7c8e78644d96e5b18d4d67684, type: 3}
       propertyPath: m_Name

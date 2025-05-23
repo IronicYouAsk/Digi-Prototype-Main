@@ -157,7 +157,8 @@ public class PlayerController : MonoBehaviour
 
         Quaternion groundRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
-        Quaternion targetRotation = groundRotation * lookRotation * tiltAngle;
+        Quaternion targetRotation = groundRotation * lookRotation;
+        // Quaternion targetRotation = groundRotation * lookRotation * tiltAngle;
     
         transform.rotation = targetRotation;
         // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * orientationAdjustSpeed);
